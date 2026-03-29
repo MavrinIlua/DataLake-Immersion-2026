@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профессии: Озера и Хранилища Данных | МГПУ</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-purple: #818cf8;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --gradient-main: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Header & Hero --- */
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(transparent, transparent 50px, rgba(56, 189, 248, 0.05) 50px, rgba(56, 189, 248, 0.05) 51px);
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            animation: fadeIn Up 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .author-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            border: 1px solid var(--accent-blue);
+            margin-top: 20px;
+        }
+
+        .btn-start {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background: var(--gradient-main);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        /* --- Sections General --- */
+        section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--accent-blue);
+        }
+
+        /* --- Market Analytics --- */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .vacancy-sources {
+            margin-top: 40px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* --- Professions Grid --- */
+        .professions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .profession-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .profession-card:hover {
+            transform: scale(1.03);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+        }
+
+        .card-header {
+            height: 150px;
+            background: linear-gradient(45deg, #1e293b, #334155);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent-blue);
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .job-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-job {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .btn-hh { background: #d6001c; color: white; }
+        .btn-dj { background: #7b61ff; color: white; }
+        .btn-job:hover { opacity: 0.8; }
+
+        /* --- Modal for Details --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            border: 1px solid var(--accent-blue);
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover { color: var(--accent-blue); }
+
+        .detail-section {
+            margin-bottom: 30px;
+        }
+
+        .detail-title {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        /* --- Career Tree --- */
+        .career-tree {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .career-node {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            border: 2px solid var(--text-secondary);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+        .career-node:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+            background: #253347;
+        }
+
+        .career-arrow {
+            font-size: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .node-level {
+            font-size: 0.8rem;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .node-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* --- Quiz Section --- */
+        .quiz-container {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-question {
+            margin-bottom: 30px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-option {
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover, .quiz-option.selected {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--accent-blue);
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid var(--accent-green);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 50px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .career-tree { flex-direction: column; }
+            .career-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div style="font-weight: bold; color: var(--accent-blue);">DATA EDUCATION HUB</div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero visible" id="home">
+        <div class="hero-content">
+            <h1>Озера и Хранилища Данных</h1>
+            <p class="subtitle">Интерактивный гид по профессиям будущего в мире Big Data</p>
+            <div class="author-badge">
+                Разработал: <strong>Маврин Илья Борисович</strong><br>
+                Магистрант МГПУ (Московский городской педагогический университет)
+            </div>
+            <br>
+            <button class="btn-start" onclick="document.getElementById('analytics').scrollIntoView({behavior: 'smooth'})">Начать погружение</button>
+        </div>
+    </section>
+
+    <!-- ANALYTICS SECTION -->
+    <section id="analytics">
+        <div class="container">
+            <h2>Рынок труда: Аналитика 2024-2025</h2>
+            <p style="text-align: center; margin-bottom: 40px; color: var(--text-secondary);">
+                Данные агрегированы с платформ: HH.ru, DreamJob, Работа.ру, LinkedIn (EU/US)
+            </p>
+            
+            <div class="analytics-grid">
+                <div class="stat-card">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Вакансий требуют опыт работы от 1 года</div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                        Но есть путь для старта: стажировки и позиции Junior через портфолио проектов.
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">SQL</div>
+                    <div class="stat-label">Навык №1 в 98% вакансий</div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                        Без знания SQL вход в профессию практически невозможен.
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">150k+</div>
+                    <div class="stat-label">Средняя ЗП начинающего специалиста (RF)</div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                        Senior специалисты получают от 350к до 600к+ рублей.
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Python</div>
+                    <div class="stat-label">Второй ключевой язык</div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                        Требуется для автоматизации пайплайнов и работы с данными (Pandas, PySpark).
+                    </p>
+                </div>
+            </div>
+
+            <div class="vacancy-sources">
+                <p>💡 <strong>Совет:</strong> Чтобы пробиться без опыта, создайте пет-проект: разверните свое хранилище данных, настройте ETL-процесс и визуализируйте данные в BI.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROFESSIONS GRID -->
+    <section id="professions">
+        <div class="container">
+            <h2>Карта Профессий</h2>
+            <p style="text-align: center; margin-bottom: 40px; color: var(--text-secondary);">
+                Нажмите на карточку, чтобы узнать подробности, задачи и перспективы
+            </p>
+            <div class="professions-grid" id="professionsContainer">
+                <!-- Cards will be injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CAREER TREE -->
+    <section id="career">
+        <div class="container">
+            <h2>Карьерное Дерево (Career Path)</h2>
+            <div class="career-tree">
+                <div class="career-node">
+                    <div class="node-level">Start</div>
+                    <div class="node-title">Junior Data Engineer / Analyst</div>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-secondary);">Написание простых запросов, поддержка существующих пайплайнов, работа с Excel/SQL.</p>
+                </div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">
+                    <div class="node-level">Middle</div>
+                    <div class="node-title">Data Engineer / BI Developer</div>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-secondary);">Проектирование схем данных, оптимизация запросов, создание дашбордов, работа с облаками.</p>
+                </div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">
+                    <div class="node-level">Senior</div>
+                    <div class="node-title">Senior DE / Data Architect</div>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-secondary);">Архитектура больших систем, выбор стека технологий, менторство, безопасность данных.</p>
+                </div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">
+                    <div class="node-level">Lead / C-Level</div>
+                    <div class="node-title">CTO / Head of Data</div>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: var(--text-secondary);">Стратегия развития данных в компании, управление командами, бюджетирование.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ SECTION -->
+    <section id="quiz">
+        <div class="container">
+            <h2>Кем стать? Пройди тест</h2>
+            <div class="quiz-container">
+                <div id="quizForm">
+                    <div class="quiz-question">
+                        <h3>1. Что вам нравится делать больше всего?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-score="analyst">Исследовать данные, искать закономерности, строить красивые графики</div>
+                            <div class="quiz-option" data-score="engineer">Строить надежные системы, настраивать серверы, писать код для автоматизации</div>
+                            <div class="quiz-option" data-score="scientist">Придумывать алгоритмы, обучать нейросети, предсказывать будущее</div>
+                            <div class="quiz-option" data-score="governance">Следить за порядком, правилами доступа и качеством информации</div>
+                        </div>
+                    </div>
+                    <div class="quiz-question">
+                        <h3>2. Ваш любимый инструмент?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-score="analyst">Excel, Tableau, PowerBI</div>
+                            <div class="quiz-option" data-score="engineer">Python, SQL, Docker, Airflow</div>
+                            <div class="quiz-option" data-score="scientist">PyTorch, TensorFlow, Jupyter Notebook</div>
+                            <div class="quiz-option" data-score="governance">Документация, GDPR, метаданные</div>
+                        </div>
+                    </div>
+                    <div class="quiz-question">
+                        <h3>3. Какой результат работы вас радует?</h3>
+                        <div class="quiz-options">
+                            <div class="quiz-option" data-score="analyst">Инсайт, который помог бизнесу заработать</div>
+                            <div class="quiz-option" data-score="engineer">Стабильно работающий пайплайн без ошибок</div>
+                            <div class="quiz-option" data-score="scientist">Модель, которая угадывает с точностью 99%</div>
+                            <div class="quiz-option" data-score="governance">Чистый реестр данных и отсутствие штрафов</div>
+                        </div>
+                    </div>
+                    <button class="btn-start" onclick="calculateResult()" style="width: 100%; margin-top: 20px;">Узнать результат</button>
+                </div>
+                <div id="quizResult" class="quiz-result">
+                    <h3>Ваша идеальная профессия:</h3>
+                    <h2 id="resultTitle" style="color: var(--accent-green); margin: 20px 0;"></h2>
+                    <p id="resultDesc"></p>
+                    <button class="btn-start" onclick="location.reload()" style="margin-top: 20px; font-size: 1rem;">Пройти заново</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Маврин Илья Борисович | МГПУ</p>
+            <p style="font-size: 0.8rem; margin-top: 10px;">Образовательный проект для цифровой кафедры</p>
+        </div>
+    </footer>
+
+    <!-- MODAL TEMPLATE -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="text-align: left; color: var(--accent-blue);"></h2>
+            
+            <div class="detail-section">
+                <div class="detail-title">👤 Кто это такой?</div>
+                <p id="modalWho"></p>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-title">⚙️ Что делает (Задачи)?</div>
+                <ul id="modalTasks" style="padding-left: 20px; color: var(--text-secondary);"></ul>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-title">🛠️ Инструменты и Навыки</div>
+                <div id="modalSkills" class="skill-tags"></div>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-title">📦 Продукты деятельности</div>
+                <p id="modalProducts"></p>
+            </div>
+
+            <div class="detail-section">
+                <div class="detail-title">🚀 Перспективы и ЗП</div>
+                <p id="modalCareer"></p>
+            </div>
+
+            <div class="job-links" style="margin-top: 30px;">
+                <a id="linkHH" href="#" target="_blank" class="btn-job btn-hh">Вакансии на HH.ru</a>
+                <a id="linkDJ" href="#" target="_blank" class="btn-job btn-dj">Вакансии на DreamJob</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const professions = [
+            {
+                id: 'data_engineer',
+                title: 'Data Engineer',
+                icon: '🏗️',
+                short: 'Архитектор труб данных. Строит пути, по которым данные бегут от источников к аналитикам.',
+                who: 'Это специалист, который проектирует и строит инфраструктуру для сбора, хранения и обработки больших данных. Если данные — это нефть, то Дата Инженер строит нефтепроводы и нефтеперерабатывающие заводы.',
+                tasks: [
+                    'Разработка и поддержка ETL/ELT процессов (извлечение, трансформация, загрузка)',
+                    'Проектирование схем баз данных и хранилищ (Data Warehouse, Data Lake)',
+                    'Оптимизация SQL-запросов и производительности баз данных',
+                    'Настройка потоковой обработки данных (Real-time)',
+                    'Взаимодействие с аналитиками и учеными для предоставления данных'
+                ],
+                skills: ['SQL (Advanced)', 'Python/Scala', 'Apache Spark', 'Airflow', 'Kafka', 'Docker/Kubernetes', 'Cloud (AWS/Azure/Yandex)', 'Git'],
+                products: 'Отлаженные пайплайны данных, чистые витрины данных, документация архитектуры, автоматизированные скрипты загрузки.',
+                career: 'Одна из самых востребованных профессий. Рост от Junior (100-150к) до Architect (400-600к+). Возможность уйти в управление или глубокую экспертизу.',
+                searchHH: 'Data Engineer',
+                searchDJ: 'Дата инженер'
+            },
+            {
+                id: 'bi_developer',
+                title: 'BI Developer',
+                icon: '📊',
+                short: 'Визуализатор данных. Превращает сухие цифры в понятные дашборды для директоров.',
+                who: 'Разработчик систем бизнес-интеллекта (Business Intelligence). Его задача — сделать так, чтобы любой менеджер мог посмотреть на график и понять, растет прибыль или падает.',
+                tasks: [
+                    'Создание интерактивных дашбордов и отчетов',
+                    'Написание сложных SQL-запросов для подготовки данных',
+                    'Сбор требований у бизнеса (что именно нужно считать)',
+                    'Оптимизация скорости загрузки отчетов',
+                    'Внедрение культуры работы с данными в компании'
+                ],
+                skills: ['SQL', 'PowerBI / Tableau / Superset', 'Excel (Advanced)', 'Data Modeling', 'Basic Python', 'Бизнес-анализ'],
+                products: 'Дашборды, автоматические рассылки отчетов, единая версия правды для компании.',
+                career: 'Высокий спрос в ритейле, банках, маркетинге. ЗП от 120к до 350к. Можно вырасти в Head of Analytics.',
+                searchHH: 'BI Developer',
+                searchDJ: 'БИ разработчик'
+            },
+            {
+                id: 'data_analyst',
+                title: 'Data Analyst',
+                icon: '🔍',
+                short: 'Исследователь. Ищет ответы на вопросы бизнеса, используя статистику и данные.',
+                who: 'Специалист, который анализирует данные, чтобы найти инсайты. Он отвечает на вопросы: "Почему упали продажи?", "Кто наш лучший клиент?", "Стоит ли запускать эту фичу?".',
+                tasks: [
+                    'Гипотезы и A/B тестирование',
+                    'Сегментация пользователей (Cohort analysis)',
+                    'Расчет метрик продукта (LTV, Churn, Retention)',
+                    'Презентация результатов стейкхолдерам',
+                    'Работа с сырыми данными в SQL/Python'
+                ],
+                skills: ['SQL', 'Python (Pandas, NumPy)', 'Statistics', 'Excel/Google Sheets', 'Visualization tools', 'Critical thinking'],
+                products: 'Аналитические записки, презентации с выводами, модели прогнозирования, рекомендации по улучшению продукта.',
+                career: 'Старт от 80-100к. Потолок высокий, особенно в Product Analytics (до 400к). Путь в Data Science или Product Management.',
+                searchHH: 'Data Analyst',
+                searchDJ: 'Аналитик данных'
+            },
+            {
+                id: 'ml_engineer',
+                title: 'ML Engineer',
+                icon: '🤖',
+                short: 'Инженер нейросетей. Внедряет модели искусственного интеллекта в реальные продукты.',
+                who: 'Мост между наукой о данных и продакшеном. Data Scientist придумывает модель, а ML Engineer делает так, чтобы она работала быстро и надежно на миллионах пользователей.',
+                tasks: [
+                    'Развертывание моделей машинного обучения (Deployment)',
+                    'Мониторинг качества моделей (MLOps)',
+                    'Оптимизация кода моделей для работы на сервере',
+                    'Разработка рекомендательных систем и чат-ботов',
+                    'Работа с большими данными для обучения моделей'
+                ],
+                skills: ['Python', 'PyTorch/TensorFlow', 'Docker/K8s', 'CI/CD', 'Cloud ML Services', 'SQL', 'Algorithms'],
+                products: 'Работающие микросервисы с AI, рекомендательные движки, системы распознавания образов.',
+                career: 'Очень высокая ЗП (от 200к старт, до 700к+). Дефицит кадров огромный. Нужна сильная математическая база.',
+                searchHH: 'ML Engineer',
+                searchDJ: 'Инженер машинного обучения'
+            },
+            {
+                id: 'data_architect',
+                title: 'Data Architect',
+                icon: '🏛️',
+                short: 'Главный проектировщик. Решает, какие технологии использовать и как все связать.',
+                who: 'Стратег в мире данных. Он не пишет код каждый день, он рисует схемы глобальных систем, выбирает между озером и складом данных, решает вопросы безопасности.',
+                tasks: [
+                    'Выбор технологического стека компании',
+                    'Проектирование масштабируемой архитектуры',
+                    'Стандартизация процессов работы с данными',
+                    'Оценка рисков и безопасности данных',
+                    'Менторство команд инженеров'
+                ],
+                skills: ['System Design', 'Deep SQL knowledge', 'Cloud Architecture', 'Big Data Tech Stack', 'Leadership', 'Communication'],
+                products: 'Архитектурные схемы, технические стратегии, стандарты разработки, дорожные карты развития.',
+                career: 'Вершина технической ветки. ЗП от 400к до 1млн+. Требует огромного опыта (обычно 7+ лет).',
+                searchHH: 'Data Architect',
+                searchDJ: 'Архитектор данных'
+            },
+            {
+                id: 'data_governance',
+                title: 'Data Governance Manager',
+                icon: '🛡️',
+                short: 'Хранитель качества и правил. Следит, чтобы данные были достоверными и безопасными.',
+                who: 'Специалист, отвечающий за доступность, целостность, безопасность и использование данных внутри организации. Полицейский и библиотекарь в одном лице.',
+                tasks: [
+                    'Разработка политик управления данными',
+                    'Контроль качества данных (Data Quality)',
+                    'Управление метаданными (каталогизация)',
+                    'Обеспечение соответствия законам (152-ФЗ, GDPR)',
+                    'Разграничение прав доступа'
+                ],
+                skills: ['Legislation knowledge', 'Data Quality tools', 'Metadata management', 'Process management', 'SQL basics'],
+                products: 'Регламенты, паспорт данных, отчеты о качестве данных, карта классификации данных.',
+                career: 'Новая, но быстрорастущая роль в крупных энтерпрайзах и банках. ЗП от 150к до 400к.',
+                searchHH: 'Data Governance',
+                searchDJ: 'Управление данными'
+            }
+        ];
+
+        // --- RENDER FUNCTIONS ---
+        
+        function renderProfessions() {
+            const container = document.getElementById('professionsContainer');
+            container.innerHTML = '';
+            
+            professions.forEach(prof => {
+                const card = document.createElement('div');
+                card.className = 'profession-card';
+                card.onclick = () => openModal(prof);
+                
+                card.innerHTML = `
+                    <div class="card-header">${prof.icon}</div>
+                    <div class="card-body">
+                        <h3 class="card-title">${prof.title}</h3>
+                        <p class="card-desc">${prof.short}</p>
+                        <div class="job-links">
+                            <a href="https://hh.ru/search/vacancy?text=${encodeURIComponent(prof.searchHH)}" target="_blank" class="btn-job btn-hh" onclick="event.stopPropagation()">HH.ru</a>
+                            <a href="https://dreamjob.ru/search?vacancyName=${encodeURIComponent(prof.searchDJ)}" target="_blank" class="btn-job btn-dj" onclick="event.stopPropagation()">DreamJob</a>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // --- MODAL LOGIC ---
+        
+        function openModal(prof) {
+            document.getElementById('modalTitle').innerText = prof.title;
+            document.getElementById('modalWho').innerText = prof.who;
+            
+            const tasksList = document.getElementById('modalTasks');
+            tasksList.innerHTML = '';
+            prof.tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.innerText = task;
+                li.style.marginBottom = '8px';
+                tasksList.appendChild(li);
+            });
+
+            const skillsContainer = document.getElementById('modalSkills');
+            skillsContainer.innerHTML = '';
+            prof.skills.forEach(skill => {
+                const span = document.createElement('span');
+                span.className = 'skill-tag';
+                span.innerText = skill;
+                skillsContainer.appendChild(span);
+            });
+
+            document.getElementById('modalProducts').innerText = prof.products;
+            document.getElementById('modalCareer').innerText = prof.career;
+
+            document.getElementById('linkHH').href = `https://hh.ru/search/vacancy?text=${encodeURIComponent(prof.searchHH)}`;
+            document.getElementById('linkDJ').href = `https://dreamjob.ru/search?vacancyName=${encodeURIComponent(prof.searchDJ)}`;
+
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        });
+
+        // --- SCROLL ANIMATION ---
+        
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- QUIZ LOGIC ---
+        
+        let scores = {
+            analyst: 0,
+            engineer: 0,
+            scientist: 0,
+            governance: 0
+        };
+
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Visual selection
+                this.parentElement.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Logic
+                const scoreType = this.getAttribute('data-score');
+                // In a real app we'd track per question, here simplified: last click wins per section logic or accumulate
+                // Let's just accumulate for simplicity in this demo
+                scores[scoreType]++; 
+            });
+        });
+
+        function calculateResult() {
+            // Find max score
+            let maxScore = 0;
+            let resultRole = '';
+            let resultDesc = '';
+
+            for (const [role, score] of Object.entries(scores)) {
+                if (score > maxScore) {
+                    maxScore = score;
+                    resultRole = role;
+                }
+            }
+
+            // Map to profession details
+            const resultsMap = {
+                'analyst': { title: 'Data Analyst / BI Developer', desc: 'Вам нравится искать смыслы в цифрах и показывать их людям. Ваша суперсила — объяснять сложное простым языком графиков.' },
+                'engineer': { title: 'Data Engineer / Architect', desc: 'Вы любите строить надежные системы. Вам важно, чтобы все работало как часы. Код и инфраструктура — ваш дом.' },
+                'scientist': { title: 'ML Engineer / Data Scientist', desc: 'Вы мечтаете создавать искусственный интеллект. Математика и алгоритмы не пугают, а вдохновляют вас.' },
+                'governance': { title: 'Data Governance Manager', desc: 'Вы цените порядок и правила. Мир данных хаотичен, и именно вы можете навести в нем структуру и безопасность.' }
+            };
+
+            const finalResult = resultsMap[resultRole] || resultsMap['analyst']; // Fallback
+
+            document.getElementById('quizForm').style.display = 'none';
+            document.getElementById('quizResult').style.display = 'block';
+            document.getElementById('resultTitle').innerText = finalResult.title;
+            document.getElementById('resultDesc').innerText = finalResult.desc;
+        }
+
+        // Init
+        renderProfessions();
+
+    </script>
+</body>
+</html>
