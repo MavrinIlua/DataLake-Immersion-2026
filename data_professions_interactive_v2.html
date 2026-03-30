@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Ecosystem & Careers | МГПУ</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --sidebar-bg: #1e293b;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --secondary: #818cf8;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --gradient-1: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --gradient-2: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid #334155;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-area {
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 1rem;
+        }
+
+        .logo-area h2 {
+            font-size: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-area p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 12px 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            text-align: left;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+        }
+
+        .nav-btn.active {
+            background: var(--gradient-1);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .author-block {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid #334155;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .author-block strong {
+            color: var(--text-main);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 2rem 3rem;
+            max-width: 1400px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.8rem;
+            color: var(--secondary);
+        }
+
+        p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        /* Cards & Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #334155;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-color: var(--accent);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .tag-sql { background: rgba(251, 191, 36, 0.2); color: var(--warning); }
+        .tag-core { background: rgba(56, 189, 248, 0.2); color: var(--accent); }
+        .tag-ml { background: rgba(129, 140, 248, 0.2); color: var(--secondary); }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-hh {
+            background-color: #d02e2e;
+            color: white;
+        }
+        .btn-hh:hover { background-color: #b01e1e; }
+
+        .btn-dj {
+            background-color: #00c28f;
+            color: white;
+        }
+        .btn-dj:hover { background-color: #00a075; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        .btn-outline:hover {
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        /* Theory Section Specifics */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+        .comparison-table th {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+        }
+
+        .info-box {
+            background: rgba(129, 140, 248, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        /* Career Path */
+        .career-path {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .career-node {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+        .career-arrow {
+            font-size: 2rem;
+            color: var(--text-muted);
+            align-self: center;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--accent);
+        }
+        .quiz-result {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 8px;
+            display: none;
+        }
+
+        /* Images */
+        .hero-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; padding: 1rem; }
+            .main-content { margin-left: 0; padding: 1rem; }
+            .career-path { flex-direction: column; }
+            .career-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="logo-area">
+            <h2>DataEdu</h2>
+            <p>Интерактивный гид по экосистеме данных</p>
+        </div>
+        <ul class="nav-links">
+            <li><button class="nav-btn active" onclick="showSection('intro')">🏠 Главная</button></li>
+            <li><button class="nav-btn" onclick="showSection('theory')">📚 Теория: Озера и Хранилища</button></li>
+            <li><button class="nav-btn" onclick="showSection('professions')">💼 Профессии (Каталог)</button></li>
+            <li><button class="nav-btn" onclick="showSection('market')">📈 Рынок труда 2026</button></li>
+            <li><button class="nav-btn" onclick="showSection('career')">🌳 Карьерное дерево</button></li>
+            <li><button class="nav-btn" onclick="showSection('start')">🚀 Старт без опыта</button></li>
+            <li><button class="nav-btn" onclick="showSection('quiz')">🧩 Тест: Кто я?</button></li>
+        </ul>
+        <div class="author-block">
+            <strong>Маврин Илья Борисович</strong>
+            Магистрант МГПУ<br>
+            Кафедра цифровых технологий
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- SECTION: INTRO -->
+        <section id="intro" class="section active">
+            <img src="https://images.unsplash.com/photo-1558494949-ef526b0042a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Data Center" class="hero-img">
+            <h1>Добро пожаловать в мир Современных Данных</h1>
+            <p style="font-size: 1.2rem;">
+                Здесь мы разберемся не только с модным термином <strong>Big Data</strong>, но и погрузимся в архитектуру 
+                <strong>Data Lake</strong>, <strong>Data Warehouse</strong> и гибридных решений <strong>Lakehouse</strong>.
+            </p>
+            <div class="info-box">
+                <p><strong>Цель этого ресурса:</strong> Показать вам реальный мир профессий, связанных с данными. 
+                От тех, кто строит трубы для данных (Engineers), до тех, кто учит машины думать (ML Engineers) и принимает решения на основе цифр (Analysts).</p>
+            </div>
+            <p>Навигация слева поможет вам выбрать путь: изучить теорию, посмотреть вакансии или пройти тест на профориентацию.</p>
+            <br>
+            <button class="btn btn-outline" onclick="showSection('professions')">Перейти к профессиям →</button>
+        </section>
+
+        <!-- SECTION: THEORY -->
+        <section id="theory" class="section">
+            <h1>Архитектура Данных: Ликбез</h1>
+            <p>Прежде чем выбирать профессию, нужно понять, с чем именно предстоит работать. В современном мире данные хранятся по-разному.</p>
+
+            <h2>1. Что такое Озеро данных (Data Lake)?</h2>
+            <p>Представьте огромное естественное озеро. В него впадают реки (потоки данных) самого разного качества: грязные, чистые, структурированные таблицы, логи серверов, картинки, видео. 
+            В озеро данные сбрасываются в <strong>"сыром"</strong> виде. Схема (структура) накладывается только тогда, когда вы достаете данные для анализа.</p>
+            <ul>
+                <li><strong>Плюсы:</strong> Дешево хранить петабайты, гибкость (можно хранить что угодно).</li>
+                <li><strong>Минусы:</strong> Риск превратиться в "Болото данных" (Data Swamp), если нет контроля качества.</li>
+            </ul>
+
+            <h2>2. Что такое Хранилище данных (Data Warehouse)?</h2>
+            <p>Это элитный склад с полочками. Данные перед попаданием сюда тщательно очищаются, сортируются и структурируются. 
+            Здесь всё лежит по строгим правилам. Это нужно для быстрой бизнес-отчетности.</p>
+            <ul>
+                <li><strong>Плюсы:</strong> Высокая скорость запросов, надежность, единая версия правды.</li>
+                <li><strong>Минусы:</strong> Дорого, сложно изменить структуру постфактум.</li>
+            </ul>
+
+            <h2>3. Lakehouse и Delta Lake (Гибрид будущего)</h2>
+            <div class="info-box">
+                <p><strong>Lakehouse</strong> — это современная архитектура, объединяющая дешевизну озера и надежность хранилища. 
+                Технологии вроде <strong>Delta Lake</strong> позволяют добавлять транзакционность (ACID) в обычные озера данных. 
+                Теперь можно хранить сырые данные и сразу строить на них надежную аналитику.</p>
+            </div>
+
+            <h2>Сравнительная таблица</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Характеристика</th>
+                        <th>Data Lake (Озеро)</th>
+                        <th>Data Warehouse (Хранилище)</th>
+                        <th>Lakehouse (Гибрид)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Данные</strong></td>
+                        <td>Сырые, любые форматы</td>
+                        <td>Обработанные, структурированные</td>
+                        <td>Сырые + Структурированные</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Пользователи</strong></td>
+                        <td>Data Scientists, Engineers</td>
+                        <td>Бизнес-аналитики, Менеджеры</td>
+                        <td>Все специалисты</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Стоимость</strong></td>
+                        <td>Низкая</td>
+                        <td>Высокая</td>
+                        <td>Средняя/Оптимальная</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Как не захлебнуться в озере?</h2>
+            <p>Главная проблема озер — отсутствие управления. Решение: <strong>Data Governance</strong> (управление данными). 
+            Нужны люди, которые следят за качеством, безопасностью и доступом к данным, иначе озеро превратится в свалку.</p>
+        </section>
+
+        <!-- SECTION: PROFESSIONS -->
+        <section id="professions" class="section">
+            <h1>Каталог Профессий</h1>
+            <p>Здесь собраны ключевые роли. Нажмите на кнопки, чтобы увидеть актуальные вакансии.</p>
+
+            <div class="grid-container">
+                
+                <!-- Data Engineer -->
+                <div class="card">
+                    <span class="card-icon">🏗️</span>
+                    <h3>Data Engineer</h3>
+                    <span class="tag tag-core">Core</span> <span class="tag tag-sql">SQL Heavy</span>
+                    <p><strong>Кто это:</strong> Архитектор труб. Строит инфраструктуру, по которой данные текут из источников в озеро или хранилище.</p>
+                    <p><strong>Продукты:</strong> ETL-пайплайны, витрины данных, настроенный Airflow, чистые датасеты.</p>
+                    <p><strong>День из жизни:</strong> 30% кодинг (Python/Scala), 40% отладка пайплайнов, 30% общение с аналитиками.</p>
+                    <div class="btn-group">
+                        <a href="https://hh.ru/search/vacancy?text=Data+Engineer" target="_blank" class="btn btn-hh">HH.ru</a>
+                        <a href="https://dreamjob.ru/vakansii?jbfrp%5Btext%5D=Data+Engineer" target="_blank" class="btn btn-dj">DreamJob</a>
+                    </div>
+                </div>
+
+                <!-- BI Developer -->
+                <div class="card">
+                    <span class="card-icon">📊</span>
+                    <h3>BI Developer</h3>
+                    <span class="tag tag-core">Visual</span> <span class="tag tag-sql">SQL</span>
+                    <p><strong>Кто это:</strong> Переводчик с языка цифр на язык бизнеса. Создает красивые дашборды.</p>
+                    <p><strong>Продукты:</strong> Интерактивные отчеты в PowerBI/Tableau, KPI-панели для директоров.</p>
+                    <p><strong>День из жизни:</strong> Сбор требований у заказчика, написание SQL-запросов, дизайн визуализаций.</p>
+                    <div class="btn-group">
+                        <a href="https://hh.ru/search/vacancy?text=BI+Developer" target="_blank" class="btn btn-hh">HH.ru</a>
+                        <a href="https://dreamjob.ru/vakansii?jbfrp%5Btext%5D=BI+Developer" target="_blank" class="btn btn-dj">DreamJob</a>
+                    </div>
+                </div>
+
+                <!-- Data Analyst -->
+                <div class="card">
+                    <span class="card-icon">🔍</span>
+                    <h3>Data Analyst</h3>
+                    <span class="tag tag-core">Analytics</span> <span class="tag tag-sql">SQL</span>
+                    <p><strong>Кто это:</strong> Исследователь. Ищет инсайты, отвечает на вопросы "Почему упали продажи?".</p>
+                    <p><strong>Продукты:</strong> Аналитические записки, презентации, гипотезы для роста бизнеса.</p>
+                    <p><strong>День из жизни:</strong> Анализ воронок, A/B тесты, работа в Excel/Python/Jupyter.</p>
+                    <div class="btn-group">
+                        <a href="https://hh.ru/search/vacancy?text=Data+Analyst" target="_blank" class="btn btn-hh">HH.ru</a>
+                        <a href="https://dreamjob.ru/vakansii?jbfrp%5Btext%5D=Data+Analyst" target="_blank" class="btn btn-dj">DreamJob</a>
+                    </div>
+                </div>
+
+                <!-- ML Engineer -->
+                <div class="card">
+                    <span class="card-icon">🤖</span>
+                    <h3>ML Engineer</h3>
+                    <span class="tag tag-ml">AI/ML</span> <span class="tag tag-core">Python</span>
+                    <p><strong>Кто это:</strong> Создатель интеллекта. Обучает нейросети и внедряет их в продакшн.</p>
+                    <p><strong>Продукты:</strong> Модели рекомендаций, чат-боты, системы прогнозирования спроса.</p>
+                    <p><strong>День из жизни:</strong> Эксперименты с моделями, обучение на кластерах, деплой моделей.</p>
+                    <div class="btn-group">
+                        <a href="https://hh.ru/search/vacancy?text=ML+Engineer" target="_blank" class="btn btn-hh">HH.ru</a>
+                        <a href="https://dreamjob.ru/vakansii?jbfrp%5Btext%5D=ML+Engineer" target="_blank" class="btn btn-dj">DreamJob</a>
+                    </div>
+                </div>
+
+                <!-- SQL Developer / ETL -->
+                <div class="card">
+                    <span class="card-icon">⚙️</span>
+                    <h3>SQL / ETL Developer</h3>
+                    <span class="tag tag-sql">SQL Master</span>
+                    <p><strong>Кто это:</strong> Специалист, который живет внутри базы данных. Оптимизирует запросы и перекладывает данные.</p>
+                    <p><strong>Продукты:</strong> Хранимые процедуры, сложные представления (Views), скрипты миграции.</p>
+                    <p><strong>Навыки:</strong> Продвинутый SQL (оконные функции), PL/SQL или T-SQL, понимание индексов.</p>
+                    <div class="btn-group">
+                        <a href="https://hh.ru/search/vacancy?text=SQL+Developer" target="_blank" class="btn btn-hh">HH.ru</a>
+                        <a href="https://dreamjob.ru/vakansii?jbfrp%5Btext%5D=SQL+Developer" target="_blank" class="btn btn-dj">DreamJob</a>
+                    </div>
+                </div>
+
+                <!-- Data Architect -->
+                <div class="card">
+                    <span class="card-icon">🏛️</span>
+                    <h3>Data Architect</h3>
+                    <span class="tag tag-core">Senior</span>
+                    <p><strong>Кто это:</strong> Генеральный проектировщик. Решает, какие технологии использовать и как всё связать.</p>
+                    <p><strong>Продукты:</strong> Схемы архитектуры, технические стандарты, дорожные карты развития.</p>
+                    <div class="btn-group">
+                        <a href="https://hh.ru/search/vacancy?text=Data+Architect" target="_blank" class="btn btn-hh">HH.ru</a>
+                        <a href="https://dreamjob.ru/vakansii?jbfrp%5Btext%5D=Data+Architect" target="_blank" class="btn btn-dj">DreamJob</a>
+                    </div>
+                </div>
+
+                 <!-- Data Governance -->
+                 <div class="card">
+                    <span class="card-icon">🛡️</span>
+                    <h3>Data Governance Manager</h3>
+                    <span class="tag tag-core">Management</span>
+                    <p><strong>Кто это:</strong> "Полицейский" данных. Следит за качеством, безопасностью и соблюдением законов (152-ФЗ).</p>
+                    <p><strong>Продукты:</strong> Регламенты, политики доступа, словари данных (Data Dictionary).</p>
+                    <div class="btn-group">
+                        <a href="https://hh.ru/search/vacancy?text=Data+Governance" target="_blank" class="btn btn-hh">HH.ru</a>
+                        <a href="https://dreamjob.ru/vakansii?jbfrp%5Btext%5D=Data+Governance" target="_blank" class="btn btn-dj">DreamJob</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION: MARKET -->
+        <section id="market" class="section">
+            <h1>Рынок труда: Аналитика 2025-2026</h1>
+            <p>Ситуация на рынке меняется быстро. Вот что говорят свежие данные с платформ поиска работы.</p>
+            
+            <div class="grid-container">
+                <div class="card" style="border-color: var(--success);">
+                    <h3>💰 Зарплаты (Middle/Senior)</h3>
+                    <ul style="list-style: none; margin-top: 1rem;">
+                        <li style="margin-bottom: 10px;">📊 <strong>Data Analyst:</strong> 120k - 250k ₽</li>
+                        <li style="margin-bottom: 10px;">🏗️ <strong>Data Engineer:</strong> 180k - 350k+ ₽</li>
+                        <li style="margin-bottom: 10px;">🤖 <strong>ML Engineer:</strong> 200k - 400k+ ₽</li>
+                        <li style="margin-bottom: 10px;">⚙️ <strong>SQL Dev:</strong> 130k - 220k ₽</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-color: var(--warning);">
+                    <h3>🔥 Топ навыков</h3>
+                    <p>Анализ 1000+ вакансий показал, что чаще всего требуют:</p>
+                    <ol style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-muted);">
+                        <li><strong>SQL</strong> (95% вакансий) — база основ.</li>
+                        <li><strong>Python</strong> (70%) — для инженерии и ML.</li>
+                        <li><strong>Cloud (Yandex Cloud / S3)</strong> (60%) — облака везде.</li>
+                        <li><strong>Git</strong> (50%) — контроль версий обязателен.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 2rem; border-color: var(--success); background: rgba(52, 211, 153, 0.1);">
+                <h3>✅ Как пробиться без опыта?</h3>
+                <p>Работодатели готовы смотреть на кандидатов без коммерческого опыта, если видят:</p>
+                <ul>
+                    <li><strong>Пет-проект:</strong> Не просто "курс пройден", а "я спарсил данные с сайта, положил в базу, построил график".</li>
+                    <li><strong>GitHub:</strong> Чистый код с описанием (README).</li>
+                    <li><strong>Понимание бизнес-задачи:</strong> На собеседовании важно говорить не только про код, но и про пользу для бизнеса.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION: CAREER -->
+        <section id="career" class="section">
+            <h1>Карьерное Дерево</h1>
+            <p>В IT есть два пути развития: Вертикальный (управление) и Горизонтальный (экспертность).</p>
+
+            <h2>Вертикальный рост (Management Track)</h2>
+            <div class="career-path">
+                <div class="career-node">Junior</div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">Middle</div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">Senior / Team Lead</div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">CTO / Head of Data</div>
+            </div>
+            <p><em>Здесь вы начинаете управлять людьми, бюджетами и стратегией отдела.</em></p>
+
+            <h2>Горизонтальный рост (Individual Contributor)</h2>
+            <div class="career-path">
+                <div class="career-node">Специалист</div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">Эксперт в стеке</div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">Архитектор</div>
+                <div class="career-arrow">➜</div>
+                <div class="career-node">Principal Engineer</div>
+            </div>
+            <p><em>Вы становитесь супер-экспертом, к которому приходят за решением сложнейших технических задач, но не управляете отделом.</em></p>
+            
+            <h3>Смежные переходы</h3>
+            <p>Часто специалисты меняют роль внутри сферы:</p>
+            <ul>
+                <li><strong>Analyst → Data Scientist:</strong> Если подтянуть математику и Python.</li>
+                <li><strong>SQL Dev → Data Engineer:</strong> Если освоить Spark, Airflow и Cloud.</li>
+                <li><strong>Backend Dev → Data Engineer:</strong> Очень частый кейс, так как много общего в программировании.</li>
+            </ul>
+        </section>
+
+        <!-- SECTION: START GUIDE -->
+        <section id="start" class="section">
+            <h1>🚀 Гайд: Старт без опыта</h1>
+            <p>Нет коммерческого опыта? Не проблема. Создайте свой опыт сами!</p>
+            
+            <div class="grid-container">
+                <div class="card">
+                    <h3>1. Пет-проект "Анализ маркетплейса"</h3>
+                    <p><strong>Задача:</strong> Спарсить товары с WB/Ozon, сохранить в БД, найти самые выгодные ниши.</p>
+                    <p><strong>Стек:</strong> Python (BeautifulSoup), PostgreSQL, PowerBI.</p>
+                    <p><strong>Результат:</strong> Готовый дашборд для продавца.</p>
+                </div>
+                <div class="card">
+                    <h3>2. Проект "Умный город"</h3>
+                    <p><strong>Задача:</strong> Взять открытые данные Москвы (транспорт, экология), очистить их и предсказать пробки.</p>
+                    <p><strong>Стек:</strong> Pandas, Scikit-learn, Jupyter Notebook.</p>
+                    <p><strong>Результат:</strong> Модель машинного обучения.</p>
+                </div>
+                <div class="card">
+                    <h3>3. ETL Пайплайн погоды</h3>
+                    <p><strong>Задача:</strong> Автоматически скачивать погоду каждый час, класть в "озеро" (папку/S3) и обновлять таблицу.</p>
+                    <p><strong>Стек:</strong> Bash/Python cron, SQL.</p>
+                    <p><strong>Результат:</strong> Работающий конвейер данных.</p>
+                </div>
+            </div>
+            <br>
+            <div class="info-box">
+                <p><strong>Совет:</strong> Оформите эти проекты на GitHub. В файле <code>README.md</code> напишите: "Какую проблему решал", "Какие технологии использовал", "Как запустить". Это ваше портфолио!</p>
+            </div>
+        </section>
+
+        <!-- SECTION: QUIZ -->
+        <section id="quiz" class="section">
+            <h1>🧩 Тест: Какая профессия тебе подходит?</h1>
+            <p>Ответь на 5 вопросов, и система подскажет направление.</p>
+            
+            <div class="quiz-container" id="quiz-box">
+                <!-- Questions will be injected by JS -->
+            </div>
+            
+            <div id="quiz-result" class="quiz-result">
+                <h2 id="result-title"></h2>
+                <p id="result-desc"></p>
+                <button class="btn btn-outline" onclick="location.reload()" style="margin-top: 1rem;">Пройти заново</button>
+            </div>
+        </section>
+
+        <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #334155; text-align: center; color: var(--text-muted);">
+            <p>© 2026 Маврин Илья Борисович | МГПУ (Московский городской педагогический университет)</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Разработано для цифровой кафедры. Образовательный проект.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Navigation Logic
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            // Remove active class from buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Show target section
+            document.getElementById(sectionId).classList.add('active');
+            // Highlight button
+            event.currentTarget.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0,0);
+        }
+
+        // Quiz Logic
+        const questions = [
+            {
+                q: "Что тебе нравится больше?",
+                options: [
+                    { text: "Строить схемы и налаживать потоки", type: "engineer" },
+                    { text: "Рисовать красивые графики и искать инсайты", type: "analyst" },
+                    { text: "Обучать компьютеры и писать алгоритмы", type: "ml" },
+                    { text: "Писать сложные запросы к базе данных", type: "sql" }
+                ]
+            },
+            {
+                q: "Твой идеальный инструмент?",
+                options: [
+                    { text: "Python, Airflow, Spark", type: "engineer" },
+                    { text: "Excel, PowerBI, Tableau", type: "analyst" },
+                    { text: "PyTorch, TensorFlow, Keras", type: "ml" },
+                    { text: "SSMS, DBeaver, Stored Procedures", type: "sql" }
+                ]
+            },
+            {
+                q: "Какой результат работы тебя радует?",
+                options: [
+                    { text: "Данные доставлены вовремя и без ошибок", type: "engineer" },
+                    { text: "Бизнес принял решение благодаря моему отчету", type: "analyst" },
+                    { text: "Модель точно предсказала будущее", type: "ml" },
+                    { text: "Запрос выполняется за миллисекунды", type: "sql" }
+                ]
+            },
+            {
+                q: "Как ты относишься к беспорядку в данных?",
+                options: [
+                    { text: "Сам всё почищу и структурирую", type: "engineer" },
+                    { text: "Попробую найти в этом закономерность", type: "analyst" },
+                    { text: "Использую это для обучения модели", type: "ml" },
+                    { text: "Требую, чтобы данные приходили чистыми", type: "sql" }
+                ]
+            },
+            {
+                q: "Кем ты видишь себя через 5 лет?",
+                options: [
+                    { text: "Архитектором больших систем", type: "engineer" },
+                    { text: "Руководителем аналитического отдела", type: "analyst" },
+                    { text: "Ведущим исследователем (Research Scientist)", type: "ml" },
+                    { text: "Главным администратором баз данных (DBA)", type: "sql" }
+                ]
+            }
+        ];
+
+        let currentQ = 0;
+        let scores = { engineer: 0, analyst: 0, ml: 0, sql: 0 };
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-box');
+            if (currentQ >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const q = questions[currentQ];
+            let html = `<h3>Вопрос ${currentQ + 1}: ${q.q}</h3>`;
+            q.options.forEach(opt => {
+                html += `<button class="quiz-option" onclick="handleAnswer('${opt.type}')">${opt.text}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function handleAnswer(type) {
+            scores[type]++;
+            currentQ++;
+            renderQuiz();
+        }
+
+        function showResult() {
+            document.getElementById('quiz-box').style.display = 'none';
+            const resultBox = document.getElementById('quiz-result');
+            const title = document.getElementById('result-title');
+            const desc = document.getElementById('result-desc');
+            
+            // Find max score
+            let maxType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            
+            resultBox.style.display = 'block';
+            
+            const results = {
+                engineer: { t: "Data Engineer", d: "Ты любишь порядок и инфраструктуру. Твое место — построение надежных пайплайнов и работа с Big Data технологиями." },
+                analyst: { t: "Data Analyst / BI Developer", d: "Ты видишь суть вещей. Бизнесу нужны твои глаза и умение рассказывать истории через данные." },
+                ml: { t: "ML Engineer / Data Scientist", d: "Ты тяготеешь к математике и будущему. Создание искусственного интеллекта — твой путь." },
+                sql: { t: "SQL Developer / ETL Specialist", d: "Ты мастер работы с базами данных. Оптимизация и хранение информации — твоя стихия." }
+            };
+
+            title.innerText = "Твоя профессия: " + results[maxType].t;
+            desc.innerText = results[maxType].d;
+        }
+
+        // Init Quiz
+        renderQuiz();
+
+    </script>
+</body>
+</html>

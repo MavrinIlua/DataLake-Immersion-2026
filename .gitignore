@@ -1,51 +1,40 @@
-# Compiled and build artifacts
+#Compiled and build artifacts
 *.pyc
 __pycache__/
 *.o
 *.obj
-*.class
-*.exe
-*.dll
-*.so
-*.a
-*.out
+dist/
+build/
 
-# Dependencies
+#Dependencies
 .venv/
 venv/
 node_modules/
-dist/
-build/
-target/
-.gradle/
-.mypy_cache/
-.pytest_cache/
 
-# Logs and temp files
+#Logs and temp files
 *.log
 *.tmp
 *.swp
-*.swo
 
-# Environment
+#Environment
 .env
 .env.local
 .env.*
 
-# Editors
+#Editors
 .vscode/
 .idea/
 
-# System files
-.DS_Store
-Thumbs.db
-
-# Coverage
+#Coverage
 coverage/
 htmlcov/
 .coverage
 
-# Compressed files
+#OS generated files
+.DS_Store
+Thumbs.db
+
+#Compressed files
 *.zip
 *.gz
 *.tar
@@ -68,3 +57,243 @@ htmlcov/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
+
+#Python specific
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+#Node.js specific
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+#Java specific
+*.class
+*.jar
+*.war
+*.ear
+target/
+
+#C/C++ specific
+*.a
+*.out
+*.exe
+*.dll
+*.so
+
+#Go specific
+*.exe
+*.test
+*.prof
+*.mod
+*.sum
+
+#Ruby specific
+*.gem
+*.rbc
+.bundle/
+
+#Rust specific
+*.rlib
+target/
+
+#Swift specific
+*.xcodeproj/
+*.xcworkspace/
+
+#MyPy
+.mypy_cache/
+
+#PyTest
+.pytest_cache/
+
+#Jupyter
+.ipynb_checkpoints/
+
+#Gradle
+.gradle/
+
+#Maven
+.mvn/
+
+#Bazel
+.bazel-cache/
+.bazel-output-base/
+
+#Docker
+.dockerenv
+Dockerfile.generated
+
+#Vagrant
+.vagrant/
+
+#Terraform
+.terraform/
+
+#Ansible
+.retry_files/
+
+#Salt
+.salt/
+
+#Pipenv
+.pipenv
+
+#Poetry
+poetry.lock
+
+#Conda
+.conda/
+
+#VirtualEnv
+.venv/
+venv/
+env/
+
+#Heroku
+.heroku/
+
+#Netlify
+.netlify/
+
+#AWS
+.aws/
+
+#Azure
+.azure/
+
+#Google Cloud
+.gcloud/
+
+#Kubernetes
+.kube/
+
+#Jenkins
+.jenkins/
+
+#Travis CI
+.travis.yml
+
+#CircleCI
+.circleci/
+
+#GitHub Actions
+.github/
+
+#GitLab CI
+.gitlab-ci.yml
+
+#Bitbucket Pipelines
+bitbucket-pipelines.yml
+
+#Codeship
+codeship-services.yml
+codeship-steps.yml
+
+#Semaphore
+.semaphore/
+
+#Buildkite
+.buildkite/
+
+#AppVeyor
+appveyor.yml
+
+#Shippable
+shippable.yml
+
+#Wercker
+wercker.yml
+
+#Surge
+.surge/
+
+#Now
+.now/
+
+#Vercel
+.vercel/
+
+#Netlify
+.netlify/
+
+#Cloudflare Pages
+.cloudflare/
+
+#Render
+.render/
+
+#Railway
+.railway/
+
+#Fly.io
+.fly/
+
+#Supabase
+.supabase/
+
+#PlanetScale
+.planetscale/
+
+#Railway
+.railway/
+
+#Upstash
+.upstash/
+
+#Turso
+.turso/
+
+#Neon
+.neon/
+
+#Xata
+.xata/
+
+#Convex
+.convex/
+
+#Stripe
+.stripe/
+
+#Twilio
+.twilio/
+
+#SendGrid
+.sendgrid/
+
+#Mailgun
+.mailgun/
+
+#Firebase
+.firebase/
+
+#Supabase
+.supabase/
+
+#PlanetScale
+.planetscale/
+
+#Railway
+.railway/
+
+#Upstash
+.upstash/
+
+#Turso
+.turso/
+
+#Neon
+.neon/
+
+#Xata
+.xata/
+
+#Convex
+.convex/
